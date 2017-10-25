@@ -1,0 +1,14 @@
+{
+  "name": "image-optim",
+  "version": "0.1.0",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-fluent-ffmpeg": "^1.0.2",
+    "gulp-imagemin": "^3.4.0",
+    "gulp-tinypng-compress": "^1.2.1",
+    "gulp-webp": "^2.3.0",
+    "imagemin-giflossy": "^5.1.10",
+    "imagemin-jpeg-recompress": "^5.1.0",
+    "imagemin-svgo": "^5.2.2"
+  }
+}
