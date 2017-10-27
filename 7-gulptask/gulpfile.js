@@ -7,7 +7,7 @@ var imageminSvgo = require('imagemin-svgo');
 var webp = require('gulp-webp');
 var tinypng = require('gulp-tinypng-compress');
 var imageminGiflossy = require('imagemin-giflossy');
-var ffmpeg = require('gulp-fluent-ffmpeg');
+var ffmpeg = require('ffmpeg');
 // Set variables
 var PNGImages = "images/original/*.png";
 var JPEGImages = "images/original/*.jpg";
@@ -63,40 +63,11 @@ gulp.task('webpall', function () {
 
 });
 
-gulp.task('gif2video', function () {
-  // transcode gif files to mp4
-  return gulp.src('images/original/*.gif')
-    .pipe(ffmpeg('mp4', cmd => cmd
-        //.videoCodec('libx264')
-        .outputOptions([
-          '-c:v libx264',
-          '-movflags faststart',
-          '-pix_fmt yuv420p',
-          '-vf "scale=trunc(iw/2)*2:trunc(ih/2)*2"'
-        ])
-        .on('start', function(commandLine) {
-          console.log('Ffmpeg with command: ' + commandLine);
-        })
-        .on('progress', function(progress) {
-          frames = progress.frames;
-          timemark = progress.timemark;
-          console.log('currentFps:' + progress.currentFps + ' Processing: ' + progress.frames + ' timemark: ' + progress.timemark);
-        })
-        .on('error', function(err) {
-          console.log('An error occurred: ' + err.message);
-        })
-        .on('end', function() {
-          console.log('Processing finished !');
-        })
-    ))
-    .pipe(gulp.dest('images/gulped'));
-});
-
 //Watch for changes in files
 gulp.task('watch', function() {
   //Watch image files
-  gulp.watch('images/original/*', ['optimize','tinypng','webpall','gif2video']);
+  gulp.watch('images/original/*', ['optimize','tinypng','webpall']);
 });
 
 // Default Task
-gulp.task('default', ['optimize','tinypng','webpall','gif2video','watch']);
+gulp.task('default', ['optimize','tinypng','webpall','watch']);
