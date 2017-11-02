@@ -7,7 +7,6 @@ var imageminSvgo = require('imagemin-svgo');
 var webp = require('gulp-webp');
 var tinypng = require('gulp-tinypng-compress');
 var imageminGiflossy = require('imagemin-giflossy');
-var ffmpeg = require('ffmpeg');
 // Set variables
 var PNGImages = "images/original/*.png";
 var JPEGImages = "images/original/*.jpg";
