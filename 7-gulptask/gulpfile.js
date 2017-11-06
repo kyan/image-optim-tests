@@ -8,13 +8,14 @@ var webp = require('gulp-webp');
 var tinypng = require('gulp-tinypng-compress');
 var imageminGiflossy = require('imagemin-giflossy');
 // Set variables
+var inputFolder = "images/original/*";
 var PNGImages = "images/original/*.png";
 var JPEGImages = "images/original/*.jpg";
 var GIFImages = "images/original/*.gif";
 var outputFolder = "images/gulped";
 
 gulp.task('optimize', function () {
-  return gulp.src('images/original/*')
+  return gulp.src(inputFolder)
     .pipe(imagemin([
       // GIF
       imageminGiflossy({
@@ -37,18 +38,18 @@ gulp.task('optimize', function () {
         ]
       })
     ]))
-    .pipe(gulp.dest('images/gulped'));
+    .pipe(gulp.dest(outputFolder));
 });
 
 gulp.task('tinypng', function () {
-  return gulp.src('images/original/*.png')
+  return gulp.src(PNGImages)
     // PNG
     .pipe(tinypng({
       key: 'uB-zV5TEfa-byqO7Y6kZ5Y_2rIeX2niP',
       sigFile: 'images/.tinypng-sigs',
       log: true
     }))
-    .pipe(gulp.dest('images/gulped'));
+    .pipe(gulp.dest(outputFolder));
 });
 
 // Create WebP versions of everything
@@ -58,14 +59,13 @@ gulp.task('webpall', function () {
     .pipe(webp({
       quality: 70
     }))
-    .pipe(gulp.dest('images/gulped'));
-
+    .pipe(gulp.dest(outputFolder));
 });
 
 //Watch for changes in files
 gulp.task('watch', function() {
   //Watch image files
-  gulp.watch('images/original/*', ['optimize','tinypng','webpall']);
+  gulp.watch(inputFolder, ['optimize','tinypng','webpall']);
 });
 
 // Default Task
